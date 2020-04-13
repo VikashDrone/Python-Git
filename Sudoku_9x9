@@ -44,19 +44,17 @@ def validate_matrix(arr_tb, i, j, depth):
         arr_tb1 = assign_matrix(arr_tb)
     if (i + j) > 0:
         arr_tb[i][j] = random.randint(1, 9)
-    if depth > 990:
+    if depth > 5:
         return arr_tb
     print("Depth = "+str(depth))
 
-    if (i + j) > 0:
-        arr_tb[i][j] = random.randint(1, 9)
     for i in range(9):
         for j in range(9):
             print(str(arr_tb[i][j]) + " : " + str(
-                not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) + str(" i : ")
+                not_in_row(arr_tb, i, j) + 1 + 1) + str(" i : ")
                   + str(i) + str(" j : ") + str(j))
             # if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb3, i, j)) > 3:
-            if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) > 3:
+            if (not_in_row(arr_tb, i, j) + 1 + 1) > 3:
                 arr_tb = validate_matrix(arr_tb, i, j, depth)
     return arr_tb
 
