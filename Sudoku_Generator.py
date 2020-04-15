@@ -39,19 +39,19 @@ def assign_matrix(arr_tb):
 # validate matrix positions
 def validate_matrix(arr_tb, i, j, depth):
     depth = depth + 1
-    if depth > 3:
+    if depth > 999:
         return arr_tb
-    print("Depth = "+str(depth))
+    print("Depth = " + str(depth))
     if (i + j) == 0:
         arr_tb = assign_matrix(arr_tb)
-        print(arr_tb)
     if (i + j) > 0:
         arr_tb[i][j] = random.randint(1, 9)
     for i in range(3):
         for j in range(3):
-            print(str(arr_tb[i][j]) + " : " + str(
-                not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) + str(" i : ") + str(i) + str(" j : ") + str(j))
             if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) > 3:
+                print(str(arr_tb[i][j]) + " : " + str(
+                    not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) + str(
+                    " i : ") + str(i) + str(" j : ") + str(j))
                 arr_tb = validate_matrix(arr_tb, i, j, depth)
     return arr_tb
 
@@ -59,6 +59,7 @@ def validate_matrix(arr_tb, i, j, depth):
 # create matrix
 rows, cols = (3, 3)
 arr = [[0] * cols] * rows
+arr = assign_matrix(arr)
 print(arr)
 
 arr = validate_matrix(arr, 0, 0, 0)

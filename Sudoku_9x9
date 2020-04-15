@@ -38,24 +38,18 @@ def assign_matrix(arr_tb):
 
 
 # validate matrix positions
-def validate_matrix(arr_tb, i, j, depth):
-    depth = depth + 1
-    if (i + j) == 0:
-        arr_tb1 = assign_matrix(arr_tb)
-    if (i + j) > 0:
-        arr_tb[i][j] = random.randint(1, 9)
-    if depth > 5:
-        return arr_tb
-    print("Depth = "+str(depth))
+def validate_matrix(arr_tb):
 
     for i in range(9):
         for j in range(9):
-            print(str(arr_tb[i][j]) + " : " + str(
-                not_in_row(arr_tb, i, j) + 1 + 1) + str(" i : ")
-                  + str(i) + str(" j : ") + str(j))
+            arr_tb[i][j] = random.randint(1, 9)
             # if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb3, i, j)) > 3:
-            if (not_in_row(arr_tb, i, j) + 1 + 1) > 3:
-                arr_tb = validate_matrix(arr_tb, i, j, depth)
+            if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) > 3:
+                print(str(arr_tb[i][j]) + " : " + str(
+                    not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) + str(" i : ")
+                      + str(i) + str(" j : ") + str(j))
+                arr_tb[i][j] = random.randint(1, 9)
+                validate_matrix(arr_tb)
     return arr_tb
 
 
@@ -64,7 +58,7 @@ rows, cols = (9, 9)
 arr = [[0] * cols] * rows
 print(arr)
 
-arr = validate_matrix(arr, 0, 0, 0)
+arr = validate_matrix(arr)
 
 for rws in range(9):
     print(arr[rws])
