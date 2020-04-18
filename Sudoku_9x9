@@ -1,5 +1,6 @@
 import random
 from time import sleep
+import numpy as np
 
 
 def not_in_row(matrix, row, col):
@@ -37,28 +38,45 @@ def assign_matrix(arr_tb):
     return arr_tb
 
 
-# validate matrix positions
-def validate_matrix(arr_tb):
-
+def sum_matrix(matrix):
+    sm = 0
     for i in range(9):
         for j in range(9):
-            arr_tb[i][j] = random.randint(1, 9)
-            # if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb3, i, j)) > 3:
-            if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) > 3:
-                print(str(arr_tb[i][j]) + " : " + str(
-                    not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + 1) + str(" i : ")
-                      + str(i) + str(" j : ") + str(j))
-                arr_tb[i][j] = random.randint(1, 9)
-                validate_matrix(arr_tb)
-    return arr_tb
+            sm = sm + matrix[i][j]
+    return sm
+
+
+# validate matrix positions
+def validate_matrix(arr_tb, i, j, depth):
+    print("Depth :" + str(depth) + " i = " + str(i) + " j =" + str(j))
+    print("-----------------------------")
+
+    if sum_matrix(arr_tb) > 0:
+        arr[i][j] = random.randint(1, 9)
+        return (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) // 4
+    if i + j == 16:
+        arr_tb[i][j] = random.randint(1, 9)
+        return (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) // 4
+
+    while validate_matrix(arr_tb, (i + ((j + 1) // 9)), (j + 1).__mod__(9), depth + 1):
+        print(arr_tb)
+    arr_tb[i][j] = random.randint(1, 9)
+    return (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) // 4
 
 
 # create matrix
-rows, cols = (9, 9)
-arr = [[0] * cols] * rows
+arr = np.zeros((9, 9))
 print(arr)
 
-arr = validate_matrix(arr)
+while validate_matrix(arr, 0, 0, 0):
+    print("success")
+print(arr)
 
-for rws in range(9):
-    print(arr[rws])
+'''
+            if (not_in_row(arr_tb, i, j) + not_in_column(arr_tb, i, j) + not_in_matrix(arr_tb, i, j)) <= 3:
+                validate_matrix(arr_tb, i, j + 1, depth + 1)
+            else:
+                j = j - 1
+                arr_tb[i][j-1] = 0
+                return arr_tb
+'''
